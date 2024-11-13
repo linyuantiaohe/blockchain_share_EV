@@ -58,7 +58,7 @@ if os.path.exists('./chains/bak_blockchain.txt'):
     if st.button("确定",key='makedeal'):
         if option != '0':
             message_for_share,message_for_rent=new_bc.make_a_deal(business_type,len(new_bc.chain),int(option),mylotid,new_bc.chain[int(option)]['business_message'].split('|')[2],new_bc.chain[int(option)]['business_message'].split('|')[3],new_bc.chain[int(option)]['business_message'].split('|')[4],new_bc.chain[int(option)]['business_message'].split('|')[5])
-            st.write(message_for_share)
+            st.write(message_for_rent)
             os.remove('./chains/bak_blockchain.txt')
             if not os.path.exists('./chains/'):
                 os.mkdir('./chains/')
