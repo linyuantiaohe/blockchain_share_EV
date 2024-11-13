@@ -45,7 +45,7 @@ if st.button("提交",key='submit'):
     new_bc.make_a_request(agent_business_message)
     if_fit,fit_list=new_bc.get_available_list(agent_business_message)
     if not os.path.exists('./chains/'):
-        os.mkdirs('./chains/')
+        os.mkdir('./chains/')
     with open('./chains/latest_blockchain.json',"w") as f:
         json.dump(new_bc.chain,f)
     if if_fit:
@@ -64,7 +64,7 @@ if os.path.exists('./chains/bak_blockchain.txt'):
             st.write(message_for_share)
             os.remove('./chains/bak_blockchain.txt')
             if not os.path.exists('./chains/'):
-                os.mkdirs('./chains/')
+                os.mkdir('./chains/')
             with open('./chains/latest_blockchain.json',"w") as f:
                 json.dump(new_bc.chain,f)
         else:
