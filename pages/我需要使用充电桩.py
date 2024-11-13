@@ -61,14 +61,14 @@ if os.path.exists('./chains/bak_blockchain.txt'):
     available_dict={i:"%s--%s"%(i,new_bc.chain[i]['business_message']) for i in fit_list}
     available_dict[0]='0--放弃'
     option=(st.selectbox('选择待匹配供给:',available_dict.values())).split('--')[0]
-    if option != '0':
-        if st.button("确定",key='makedeal'):
+    if st.button("确定",key='makedeal'):
+        if option != '0':
             message_for_share,message_for_rent=new_bc.make_a_deal(business_type[1],int(option),myblock,mylotid,new_bc.chain[int(option)]['business_message'].split('|')[2],new_bc.chain[int(option)]['business_message'].split('|')[3],new_bc.chain[int(option)]['business_message'].split('|')[4],new_bc.chain[int(option)]['business_message'].split('|')[5])
             st.write(message_for_rent)
             if not os.path.exists('./chains/'):
                 os.mkdir('./chains/')
             with open('./chains/latest_blockchain.json',"w") as f:
                 json.dump(new_bc.chain,f)
-        os.remove('./chains/bak_blockchain.txt')
-    else:
-        st.write('继续等待.稍后如有匹配成功,会发出通知.')
+            os.remove('./chains/bak_blockchain.txt')
+        else:
+            st.write('继续等待.稍后如有匹配成功,会发出通知.')
