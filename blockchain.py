@@ -82,25 +82,24 @@ class Blockchain:
         return True
 
     def chain_check_have_a_deal(self, agent_business_message):
-        previous_block = self.chain[0]
         block_index = 1
         a_business_type,a_myid,a_mylotid,a_starttime,a_endtime,a_price=agent_business_message.split('|')
         target_business_type={'SN':['BN','BE'],'SE':['BE'],'BN':['SN'],'BE':['SN','SE']}[a_business_type]
 
         available_block_index={}
-        while block_index < len(self.chain):
-            block = self.chain[block_index]
+        while block_index < len(self.chain)+1:
+            block = self.chain[block_index-1]
             if block['block_type']=='Agent':
                 b_business_type,b_myid,b_mylotid,b_starttime,b_endtime,b_price=block['business_message'].split('|')
                 if b_business_type in target_business_type:
                     if datetime.datetime.strptime(b_starttime, "%Y-%m-%d %H:%M:%S")<datetime.datetime.strptime(a_endtime, "%Y-%m-%d %H:%M:%S") and datetime.datetime.strptime(b_endtime, "%Y-%m-%d %H:%M:%S")>datetime.datetime.strptime(a_starttime, "%Y-%m-%d %H:%M:%S"):
                         available_block_index[block_index]=True
-            if block['block_type']=='Deal':
+            elif block['block_type']=='Deal':
                 c_business_type,c_from_block_index,c_to_block_index,c_fromlotid,c_tolotid,c_starttime,c_endtime,c_price=block['business_message'].split('|')
-                if a_business_type[0]=='S' and c_to_block_index in available_block_index.keys():
-                    available_block_index[block_index]=False
-                elif a_business_type[0]=='B' and c_from_block_index in available_block_index.keys():
-                    available_block_index[block_index]=False
+                if a_business_type[0]=='S' and (int(c_to_block_index) in available_block_index.keys()):
+                    available_block_index[int(c_to_block_index)]=False
+                if a_business_type[0]=='B' and (int(c_from_block_index) in available_block_index.keys()):
+                    available_block_index[int(c_from_block_index)]=False
             block_index+=1
 
         final_available=[]
