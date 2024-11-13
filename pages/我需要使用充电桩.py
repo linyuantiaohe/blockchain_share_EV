@@ -57,7 +57,7 @@ if os.path.exists('./chains/bak_blockchain.txt'):
     option=(st.selectbox('选择待匹配供给:',available_dict.values())).split('--')[0]
     if st.button("确定",key='makedeal'):
         if option != '0':
-            message_for_share,message_for_rent=new_bc.make_a_deal(business_type,len(new_bc.chain),int(option),mylotid,new_bc.chain[int(option)]['business_message'].split('|')[2],new_bc.chain[int(option)]['business_message'].split('|')[3],new_bc.chain[int(option)]['business_message'].split('|')[4],new_bc.chain[int(option)]['business_message'].split('|')[5])
+            message_for_share,message_for_rent=new_bc.make_a_deal(business_type[1],len(new_bc.chain),int(option),mylotid,new_bc.chain[int(option)]['business_message'].split('|')[2],new_bc.chain[int(option)]['business_message'].split('|')[3],new_bc.chain[int(option)]['business_message'].split('|')[4],new_bc.chain[int(option)]['business_message'].split('|')[5])
             st.write(message_for_rent)
             os.remove('./chains/bak_blockchain.txt')
             if not os.path.exists('./chains/'):
